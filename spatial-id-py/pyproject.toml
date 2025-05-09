@@ -1,0 +1,21 @@
+[build-system]
+requires = ["maturin>=1.4,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "spatial-id-py"
+version = "0.1.0"
+description = "Python bindings for spatial-id-rs (PyO3)"
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Rust",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "maturin>=1.8.4",
+    "pytest>=8.3.5",
+]

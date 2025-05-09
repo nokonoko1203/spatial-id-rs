@@ -1,0 +1,17 @@
+[package]
+name = "spatial-id-py"
+version = "0.1.0"
+edition = "2021"
+description = "Python bindings for spatial-id-rs using PyO3"
+license = "MIT"
+
+[lib]
+name = "spatial_id_py"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.21", features = ["extension-module"] }
+spatial-id-rs = { path = "../spatial-id-rs" }
+
+[package.metadata.maturin]
+name = "spatial_id_py"
