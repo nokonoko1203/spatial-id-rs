@@ -1,0 +1,16 @@
+[project]
+name = "spatial-id-py-example"
+version = "0.1.0"
+description = "Example for using spatial-id-py as an external package."
+authors = [
+    { name = "nokonoko1203", email = "nokonoko.1203.777@gmail.com" }
+]
+requires-python = ">=3.8"
+dependencies = [
+    "spatial-id-py",
+]
+
+[tool.maturin]
+
+[tool.uv.sources]
+spatial-id-py = { path = "../../spatial-id-py" }

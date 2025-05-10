@@ -1,6 +1,6 @@
-# spatial-id-rs プロジェクト
+# spatial-id-rs
 
-Rust × WebAssembly × TypeScript 空間ID生成ライブラリ
+Rust × WebAssembly × TypeScript × Python 空間ID生成ライブラリ
 
 ## プロジェクト構成
 
@@ -8,9 +8,10 @@ Rust × WebAssembly × TypeScript 空間ID生成ライブラリ
 spatial-id-rs/           # Rustコアロジック（純粋な型・処理のみ）
 spatial-id-wasm/         # Wasmバインディング（wasm-bindgen/wasm-pack用）
 spatial-id-js/           # npm/TypeScriptラッパー・型定義・利用サンプル
+spatial-id-py/           # Pythonバインディング（PyO3+maturin用）
 ```
 
-- Rustコアは`spatial-id-rs`、Wasmバインディングは`spatial-id-wasm`、npm/TSラッパーは`spatial-id-js`に分離
+- Rustコアは`spatial-id-rs`、Wasmバインディングは`spatial-id-wasm`、npm/TSラッパーは`spatial-id-js`、Pythonバインディングは`spatial-id-py`に分離
 
 ## ビルド・利用方法
 
@@ -102,10 +103,45 @@ try {
 - SSRやNode.jsではなく、**フロントエンド/ブラウザでの利用を想定**しています。
 
 
+## Pythonバインディング（spatial-id-py）について
+
+### 概要
+- Rustコア（spatial-id-rs）の空間ID生成ロジックをPyO3でPythonバインディング化
+- Pythonから `generate_spatial_id(lat, lon, alt, zoom)` で高速・型安全に空間ID生成が可能
+- maturin/uv/pyproject.tomlベースで依存・ビルド・テストも一元管理
+- JS/Wasmバインディング同様、Rustロジックを他言語から安全に再利用
+
+### 特徴
+- PyO3によりRust関数を直接Pythonモジュールとして公開
+- Python 3.12系推奨、uvでactivate不要なシンプル開発フロー
+- サンプル・テスト・型ヒント・ドキュメント完備
+- pip/pypi配布・venv運用も容易
+
+### 使い方（抜粋）
+```sh
+uv pip install -r spatial-id-py/pyproject.toml
+uv run maturin develop
+uv run python spatial-id-py/example_generate_id.py
+uv run pytest spatial-id-py/tests/
+```
+```python
+from spatial_id_py import generate_spatial_id
+spatial_id = generate_spatial_id(35.0, 135.0, 0.0, 25)
+print(spatial_id)
+```
+
+### Rust/wasm/TypeScript連携との違い
+- JS/TypeScript連携はwasm-bindgen/wasm-pack経由でWasmバイナリを生成しnpmで配布
+- Python連携はPyO3+maturinで直接Python拡張モジュールを生成
+- どちらもRustコアロジック（spatial-id-rs）を再利用し、API設計も統一
+
+---
+
 ## 開発の流れ
 
 1. Rustコアロジック（spatial-id-rs）を実装・テスト
 2. Wasmバインディング（spatial-id-wasm）でエクスポート関数・型を設計
 3. wasm-packでターゲットごとにビルド
 4. spatial-id-jsでnpmラッパー・型定義・利用サンプルを整備
-5. 必要に応じて型定義や成果物をnpm公開
+5. Pythonバインディング（spatial-id-py）でPyO3公開・テスト・ドキュメント整備
+6. 必要に応じて型定義や成果物をnpm/pypi公開

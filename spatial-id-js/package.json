@@ -2,14 +2,13 @@
   "name": "spatial-id-js",
   "version": "0.1.0",
   "description": "spatial-id-wasm の npm/TypeScript ラッパー",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "index.js",
-    "index.d.ts"
+    "dist"
   ],
   "scripts": {
-    "test": "echo 'No tests yet'"
+    "build": "tsc"
   },
   "type": "module",
   "dependencies": {
