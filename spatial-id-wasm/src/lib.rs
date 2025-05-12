@@ -1,4 +1,4 @@
-use spatial_id_rs::cell::zfxy::ZFXY;
+use spatial_id_core::cell::zfxy::ZFXY;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]

@@ -1,5 +1,5 @@
 use pyo3::prelude::*;
-use spatial_id_rs::cell::zfxy::ZFXY;
+use spatial_id_core::cell::zfxy::ZFXY;
 
 #[pyfunction]
 #[pyo3(text_signature = "(lat, lon, alt, zoom)")]
