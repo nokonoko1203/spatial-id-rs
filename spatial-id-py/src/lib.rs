@@ -9,7 +9,7 @@ fn generate_spatial_id(lat: f64, lon: f64, alt: f64, zoom: u8) -> PyResult<Strin
 }
 
 #[pymodule]
-fn spatial_id_py(_py: Python, m: &PyModule) -> PyResult<()> {
+fn spatial_id_py(m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(generate_spatial_id, m)?)?;
     Ok(())
 }
