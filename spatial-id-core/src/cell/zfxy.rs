@@ -195,6 +195,15 @@ impl ZFXY {
         ZFXY { zoom, floor, x, y }
     }
 
+    pub fn to_lat_lon_alt(&self) -> LatLonAlt {
+        let n = 2.0f64.powi(self.zoom as i32);
+        let vz = MAX_ALT / n;
+        let (lat, lon) =
+            crate::projection::web_mercator::tile_xy_to_latlon(self.x, self.y, self.zoom);
+        let alt = self.floor as f64 * vz;
+        LatLonAlt { lat, lon, alt }
+    }
+
     pub fn to_tile_hash(&self) -> String {
         if self.zoom == 0 {
             return "".to_string();
@@ -369,6 +378,22 @@ mod tests {
         assert_eq!(cell.floor, 10);
         assert_eq!(cell.x, 16777216);
         assert_eq!(cell.y, 16777216);
+    }
+
+    #[test]
+    fn test_to_lat_lon_alt() {
+        let cell = ZFXY {
+            zoom: 25,
+            floor: 10,
+            x: 16777216,
+            y: 16777216,
+        };
+        let expected_lat_lon_alt = LatLonAlt {
+            lat: 0.0,
+            lon: 0.0,
+            alt: 10.0,
+        };
+        assert_eq!(cell.to_lat_lon_alt(), expected_lat_lon_alt);
     }
 
     #[test]

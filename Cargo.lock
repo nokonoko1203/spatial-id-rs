@@ -213,22 +213,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8917285742e9f3e1683f0a9c4e6b57960b7314d0b08d30d1ecd426713ee2eee9"
 
 [[package]]
+name = "spatial-id-core"
+version = "0.1.0"
+
+[[package]]
 name = "spatial-id-py"
 version = "0.1.0"
 dependencies = [
  "pyo3",
- "spatial-id-rs",
+ "spatial-id-core",
 ]
-
-[[package]]
-name = "spatial-id-rs"
-version = "0.1.0"
 
 [[package]]
 name = "spatial-id-wasm"
 version = "0.1.0"
 dependencies = [
- "spatial-id-rs",
+ "spatial-id-core",
  "wasm-bindgen",
 ]
 

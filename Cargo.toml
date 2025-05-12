@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "spatial-id-rs",
+    "spatial-id-core",
     "spatial-id-wasm",
     "spatial-id-py",
 ]

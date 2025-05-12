@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = { version = "0.21", features = ["extension-module"] }
-spatial-id-rs = { path = "../spatial-id-rs" }
+spatial-id-core = { path = "../spatial-id-core" }
 
 [package.metadata.maturin]
 name = "spatial_id_py"

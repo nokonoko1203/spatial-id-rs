@@ -1,5 +1,5 @@
 [package]
-name = "spatial-id-rs"
+name = "spatial-id-core"
 version = "0.1.0"
 edition = "2021"
 

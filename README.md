@@ -5,7 +5,7 @@ Rust用の空間ID生成ライブラリ
 ## プロジェクト構成
 
 ```
-spatial-id-rs/           # Rustコアロジック
+spatial-id-core/         # Rustコアロジック
 spatial-id-wasm/         # Wasmバインディング
 spatial-id-js/           # npm/TypeScriptバインディング
 spatial-id-py/           # Pythonバインディング
@@ -16,7 +16,7 @@ spatial-id-py/           # Pythonバインディング
 ### Rustコアロジックのビルド
 
 ```
-cargo build -p spatial-id-rs
+cargo build -p spatial-id-core
 ```
 
 ### WebAssemblyバインディングのビルド
@@ -78,7 +78,7 @@ wasm-pack build --target bundler
 
 - `examples/python`ディレクトリに、Pythonパッケージ雛形・型定義・利用サンプルを配置
 - `example_generate_id.py`: Python用サンプル
-- Rustコア（spatial-id-rs）の空間ID生成ロジックをPyO3でPythonバインディング化
+- Rustコア（spatial-id-core）の空間ID生成ロジックをPyO3でPythonバインディング化
 
 #### 開発の流れ
 
@@ -106,5 +106,5 @@ wasm-pack build --target bundler
 
 - JS/TypeScript連携はwasm-bindgen/wasm-pack経由でWasmバイナリを生成してパッケージで利用する
 - Python連携はPyO3+maturinで直接Python拡張モジュールを生成
-- どちらもRustコアロジック（spatial-id-rs）を再利用し、API設計も統一
+- どちらもRustコアロジック（spatial-id-core）を再利用し、API設計も統一
 
