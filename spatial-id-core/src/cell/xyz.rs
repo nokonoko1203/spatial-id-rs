@@ -14,6 +14,7 @@ impl SpatialCell for XYZTile {
     type Coord = LatLon;
     type Vertices = Vertices2D<Self::Coord>;
 
+    #[inline]
     fn centroid(&self) -> Self::Coord {
         let n = 2.0f64.powi(self.zoom as i32);
         let lon_deg = ((self.x as f64 + 0.5) / n) * 360.0 - 180.0;
@@ -27,6 +28,7 @@ impl SpatialCell for XYZTile {
         }
     }
 
+    #[inline]
     fn vertices(&self) -> Self::Vertices {
         let (lat_nw, lon_nw) =
             crate::projection::web_mercator::tile_xy_to_latlon(self.x, self.y, self.zoom);
@@ -58,6 +60,7 @@ impl SpatialCell for XYZTile {
         ]
     }
 
+    #[inline]
     fn bbox(&self) -> (Self::Coord, Self::Coord) {
         let (lat_nw, lon_nw) =
             crate::projection::web_mercator::tile_xy_to_latlon(self.x, self.y, self.zoom);

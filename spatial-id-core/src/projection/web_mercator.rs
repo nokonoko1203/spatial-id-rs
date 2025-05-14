@@ -2,6 +2,7 @@ use std::f64::consts::PI;
 
 pub const MAX_LATITUDE: f64 = 85.05112877980659;
 
+#[inline]
 pub fn latlon_to_tile_xy(lat: f64, lon: f64, zoom: u32) -> Option<(u32, u32)> {
     let lat_clamped = lat.clamp(-MAX_LATITUDE, MAX_LATITUDE);
     let lat_rad = lat_clamped.to_radians();
@@ -18,6 +19,7 @@ pub fn latlon_to_tile_xy(lat: f64, lon: f64, zoom: u32) -> Option<(u32, u32)> {
     Some((tile_x.min(max_tile_index), tile_y.min(max_tile_index)))
 }
 
+#[inline]
 pub fn tile_xy_to_latlon(x: u32, y: u32, zoom: u8) -> (f64, f64) {
     let n = 2.0f64.powi(zoom as i32);
     let lon_deg = (x as f64 / n) * 360.0 - 180.0;

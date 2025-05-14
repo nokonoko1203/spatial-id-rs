@@ -18,6 +18,7 @@ impl SpatialCell for ZFXY {
     type Coord = LatLonAlt;
     type Vertices = Vertices3D<Self::Coord>;
 
+    #[inline]
     fn centroid(&self) -> Self::Coord {
         let n = 2.0f64.powi(self.zoom as i32);
         let lon_deg = ((self.x as f64 + 0.5) / n) * 360.0 - 180.0;
@@ -32,6 +33,7 @@ impl SpatialCell for ZFXY {
         }
     }
 
+    #[inline]
     fn vertices(&self) -> Self::Vertices {
         let n = 2.0f64.powi(self.zoom as i32);
         let vz = MAX_ALT / n;
@@ -93,6 +95,7 @@ impl SpatialCell for ZFXY {
         ]
     }
 
+    #[inline]
     fn bbox(&self) -> (Self::Coord, Self::Coord) {
         let (lat_nw, lon_nw) =
             crate::projection::web_mercator::tile_xy_to_latlon(self.x, self.y, self.zoom);
@@ -114,6 +117,7 @@ impl SpatialCell for ZFXY {
 }
 
 impl ZFXY {
+    #[inline]
     fn get_parent(&self) -> Option<ZFXY> {
         if self.zoom == 0 {
             return None;
@@ -127,6 +131,7 @@ impl ZFXY {
         })
     }
 
+    #[inline]
     fn get_children(&self) -> [ZFXY; 8] {
         let child_zoom = self.zoom + 1;
         let px = self.x * 2;
@@ -185,6 +190,7 @@ impl ZFXY {
         ]
     }
 
+    #[inline]
     pub fn from_lat_lon_alt(lat: f64, lon: f64, alt: f64, zoom: u8) -> Self {
         let Some((x, y)) =
             crate::projection::web_mercator::latlon_to_tile_xy(lat, lon, zoom.into())
@@ -195,6 +201,7 @@ impl ZFXY {
         ZFXY { zoom, floor, x, y }
     }
 
+    #[inline]
     pub fn to_lat_lon_alt(&self) -> LatLonAlt {
         let n = 2.0f64.powi(self.zoom as i32);
         let vz = MAX_ALT / n;
@@ -204,6 +211,7 @@ impl ZFXY {
         LatLonAlt { lat, lon, alt }
     }
 
+    #[inline]
     pub fn to_tile_hash(&self) -> String {
         if self.zoom == 0 {
             return "".to_string();
@@ -249,10 +257,12 @@ impl ZFXY {
         out
     }
 
+    #[inline]
     pub fn to_spatial_id_str(&self) -> String {
         format!("/{}/{}/{}/{}", self.zoom, self.floor, self.x, self.y)
     }
 
+    #[inline]
     pub fn bvol_cover(min_coord: LatLonAlt, max_coord: LatLonAlt, zoom: u8) -> Vec<ZFXY> {
         let Some((min_x, min_y)) = crate::projection::web_mercator::latlon_to_tile_xy(
             max_coord.lat,
