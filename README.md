@@ -16,7 +16,7 @@ spatial-id-py/           # Pythonバインディング
 ### Rustコアロジックのビルド
 
 ```
-cargo build -p spatial-id-core
+cargo build --release -p spatial-id-core
 ```
 
 ### WebAssemblyバインディングのビルド

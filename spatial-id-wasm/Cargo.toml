@@ -3,13 +3,6 @@ name = "spatial-id-wasm"
 version = "0.1.0"
 edition = "2024"
 
-[profile.release]
-opt-level = "z"
-lto = true
-codegen-units = 1
-panic = "abort"
-strip = true
-
 [lib]
 crate-type = ["cdylib", "rlib"]
 
