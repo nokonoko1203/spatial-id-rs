@@ -200,7 +200,7 @@ impl ZFXY {
         let vz = MAX_ALT / n;
         let (lat, lon) =
             crate::projection::web_mercator::tile_xy_to_latlon(self.x, self.y, self.zoom);
-        let alt = self.floor as f64 * vz;
+        let alt = (self.floor as f64 + 0.5) * vz;
         LatLonAlt { lat, lon, alt }
     }
 
@@ -373,7 +373,7 @@ mod tests {
 
     #[test]
     fn test_from_lat_lon_alt() {
-        let cell = ZFXY::from_lat_lon_alt(0.0, 0.0, 10.0, 25);
+        let cell = ZFXY::from_lat_lon_alt(0.0, 0.0, 10.5, 25);
         assert_eq!(cell.zoom, 25);
         assert_eq!(cell.floor, 10);
         assert_eq!(cell.x, 16777216);
@@ -391,7 +391,46 @@ mod tests {
         let expected_lat_lon_alt = LatLonAlt {
             lat: 0.0,
             lon: 0.0,
-            alt: 10.0,
+            alt: 10.5,
+        };
+        assert_eq!(cell.to_lat_lon_alt(), expected_lat_lon_alt);
+
+        let cell = ZFXY {
+            zoom: 25,
+            floor: 0,
+            x: 16777216,
+            y: 16777216,
+        };
+        let expected_lat_lon_alt = LatLonAlt {
+            lat: 0.0,
+            lon: 0.0,
+            alt: 0.5,
+        };
+        assert_eq!(cell.to_lat_lon_alt(), expected_lat_lon_alt);
+
+        let cell = ZFXY {
+            zoom: 25,
+            floor: 1,
+            x: 16777216,
+            y: 16777216,
+        };
+        let expected_lat_lon_alt = LatLonAlt {
+            lat: 0.0,
+            lon: 0.0,
+            alt: 1.5,
+        };
+        assert_eq!(cell.to_lat_lon_alt(), expected_lat_lon_alt);
+
+        let cell = ZFXY {
+            zoom: 20,
+            floor: 0,
+            x: 524288,
+            y: 524288,
+        };
+        let expected_lat_lon_alt = LatLonAlt {
+            lat: 0.0,
+            lon: 0.0,
+            alt: 16.0,
         };
         assert_eq!(cell.to_lat_lon_alt(), expected_lat_lon_alt);
     }
