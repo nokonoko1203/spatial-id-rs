@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>spatial-id-js Example</title>
+    <meta charset="UTF-8">
+    <title>Spatial ID Demo</title>
 </head>
 <body>
-  <h1>spatial-id-js TypeScript Example</h1>
-  <pre id="output"></pre>
-  <script type="module" src="./example_generate_id.ts"></script>
+    <div id="app">
+      <h1>Spatial ID Generator</h1>
+      <form id="spatial-form">
+        <label>
+          緯度 (lat): <input type="number" step="any" name="lat" required value="0">
+        </label><br>
+        <label>
+          経度 (lon): <input type="number" step="any" name="lon" required value="0">
+        </label><br>
+        <label>
+          標高 (alt): <input type="number" step="any" name="alt" required value="10">
+        </label><br>
+        <label>
+          ズームレベル (zoom): <input type="number" name="zoom" min="0" max="26" required value="25">
+        </label><br>
+        <button type="submit">空間ID生成</button>
+      </form>
+      <div id="result"></div>
+      <div id="error" style="color:red;"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

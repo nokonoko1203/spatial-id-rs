@@ -1,17 +1,17 @@
 {
   "name": "typescript",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "nokonoko1203 <nokonoko.1203.777@gmail.com> (https://qiita.com/nokonoko_1203)",
-  "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
+    "spatial-id-wasm": "file:../../spatial-id-wasm/pkg",
+    "typescript": "~5.8.3",
     "vite": "^6.3.5",
-    "vite-plugin-wasm": "^3.4.1",
-    "spatial-id-js": "file:../../spatial-id-js"
+    "vite-plugin-wasm": "^3.4.1"
   }
 }
