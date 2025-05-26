@@ -99,15 +99,20 @@ impl SpatialCell for ZFXY {
         let (lat_se, lon_se) =
             crate::projection::web_mercator::tile_xy_to_latlon(self.x + 1, self.y + 1, self.zoom);
 
+        let n = 2.0f64.powi(self.zoom as i32);
+        let vz = MAX_ALT / n;
+        let alt_bottom = self.floor as f64 * vz;
+        let alt_top = (self.floor as f64 + 1.0) * vz;
+
         let min_coord = Self::Coord {
             lat: lat_se,
             lon: lon_nw,
-            alt: self.floor as f64,
+            alt: alt_bottom,
         };
         let max_coord = Self::Coord {
             lat: lat_nw,
             lon: lon_se,
-            alt: (self.floor + 1) as f64,
+            alt: alt_top,
         };
         (min_coord, max_coord)
     }
@@ -469,5 +474,32 @@ mod tests {
         let expected_id = "/25/10/16777216/16777216";
         let actual_id = cell.to_spatial_id_str();
         assert_eq!(actual_id, expected_id);
+    }
+
+    #[test]
+    fn test_bbox() {
+        let cell = ZFXY {
+            zoom: 1,
+            floor: 0,
+            x: 0,
+            y: 0,
+        };
+        let (min_coord, max_coord) = cell.bbox();
+        assert_eq!(
+            min_coord,
+            LatLonAlt {
+                lat: 0.0,
+                lon: -180.0,
+                alt: 0.0,
+            }
+        );
+        assert_eq!(
+            max_coord,
+            LatLonAlt {
+                lat: 85.0511287798066,
+                lon: 0.0,
+                alt: 16777216.0,
+            }
+        );
     }
 }
